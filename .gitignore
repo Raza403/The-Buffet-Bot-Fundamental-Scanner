@@ -1,0 +1,15 @@
+# Virtual Environments
+venv/
+env/
+.env
+
+# Python Bytecode (compiled files)
+__pycache__/
+*.py[cod]
+
+# OS System Files (Mac/Windows junk)
+.DS_Store
+Thumbs.db
+
+# IDE Settings (VS Code)
+.vscode/
