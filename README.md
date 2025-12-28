@@ -138,7 +138,15 @@ Install required libraries:
 
 Open `market_scanner.py` and update the database credentials:
 
-`DB_CONFIG = {     "host": "localhost",     "user": "your_username",     "password": "your_password",     "database": "investor_dashboard",     "port": 3306 }`
+```sql
+DB_CONFIG = {
+    "host": "localhost",
+    "user": "your_username",
+    "password": "your_password",
+    "database": "investor_dashboard",
+    "port": 3306
+}
+```
 
 * * *
 
@@ -173,7 +181,14 @@ Open in browser:
 
 You control the strictness of the scanner from the top of `market_scanner.py`:
 
-`# ELITE QUALITY FILTERS  MIN_GROSS_MARGIN = 45.0      # Pricing power requirement MIN_ROIC = 25.0              # Capital efficiency requirement MAX_DEBT_TO_EQUITY = 0.5     # Balance sheet safety MIN_FCF_YIELD = 5.0          # Valuation floor (5% = ~20x P/FCF)`
+```python
+# ELITE QUALITY FILTERS
+
+MIN_GROSS_MARGIN = 45.0      # Pricing power requirement
+MIN_ROIC = 25.0              # Capital efficiency requirement
+MAX_DEBT_TO_EQUITY = 0.5     # Balance sheet safety
+MIN_FCF_YIELD = 5.0          # Valuation floor (5% = ~20x P/FCF)
+```
 
 Tighten these → fewer survivors  
 Loosen them → more compromises
@@ -203,11 +218,36 @@ Always perform your own due diligence before investing.
 
 Create this file in your repository:
 
-`CREATE DATABASE IF NOT EXISTS investor_dashboard; USE investor_dashboard;  CREATE TABLE IF NOT EXISTS stocks (     ticker VARCHAR(10) PRIMARY KEY,     company_name VARCHAR(255),     price DECIMAL(10, 2),      safety_score INT,     cash_engine_score INT,      roic_current DECIMAL(10, 2),     debt_to_equity DECIMAL(10, 2),     gross_margin_3yr_avg DECIMAL(10, 2),     fcf_yield DECIMAL(10, 2),      status VARCHAR(20),              -- SURVIVOR | REJECTED     failure_reasons TEXT,      valuation_status VARCHAR(20),    -- BARGAIN | FAIR | PRICEY     lie_detector_status VARCHAR(20), -- VERIFIED | SUSPICIOUS      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP );`
+```sql
+CREATE DATABASE IF NOT EXISTS investor_dashboard;
+USE investor_dashboard;
+
+CREATE TABLE IF NOT EXISTS stocks (
+    ticker VARCHAR(10) PRIMARY KEY,
+    company_name VARCHAR(255),
+    price DECIMAL(10, 2),
+
+    safety_score INT,
+    cash_engine_score INT,
+
+    roic_current DECIMAL(10, 2),
+    debt_to_equity DECIMAL(10, 2),
+    gross_margin_3yr_avg DECIMAL(10, 2),
+    fcf_yield DECIMAL(10, 2),
+
+    status VARCHAR(20),              -- SURVIVOR | REJECTED
+    failure_reasons TEXT,
+
+    valuation_status VARCHAR(20),    -- BARGAIN | FAIR | PRICEY
+    lie_detector_status VARCHAR(20), -- VERIFIED | SUSPICIOUS
+
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
 
 * * *
 
 ## 🧠 Author
 
-**Built by Code & Capital**  
+**Built by [Ahmed Raza](https://github.com/Raza403)**  
 Follow the math. Ignore the narrative.
