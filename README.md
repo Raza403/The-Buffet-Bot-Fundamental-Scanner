@@ -42,3 +42,74 @@ You need a local MySQL instance running. Create a database named `investor_dashb
 Install the required libraries:
 ```bash
 pip install yfinance mysql-connector-python pandas requests numpy
+
+3. Configure Database Connection
+Open market_scanner.py and update the DB_CONFIG dictionary with your local credentials:
+
+Python
+
+DB_CONFIG = {
+    'host': 'localhost',
+    'user': 'your_username', 
+    'password': 'your_password',
+    'database': 'investor_dashboard',
+    'port': 3306 # Default MySQL port
+}
+4. Run the Scanner
+Execute the Python script to fetch data and populate the database:
+
+Bash
+
+python market_scanner.py
+You will see the terminal light up with red (REJECTED) and green (SURVIVOR) logs.
+
+5. Launch the Dashboard
+Serve the index.php file using a local PHP server (XAMPP, MAMP, or built-in PHP):
+
+Bash
+
+php -S localhost:8000
+Open your browser to http://localhost:8000.
+
+🎛️ Configuration (God Mode)
+You can tweak the strictness of the "Buffett Bot" by modifying the constants at the top of market_scanner.py:
+
+Python
+
+# THE "ELITE" FILTERS
+MIN_GROSS_MARGIN = 45.0     # Pricing power requirement
+MIN_ROIC = 25.0             # Management efficiency requirement
+MAX_DEBT_TO_EQUITY = 0.5    # Leverage limit
+MIN_FCF_YIELD = 5.0         # Valuation floor (5% = 20x P/FCF)
+⚠️ Disclaimer
+This software is for educational purposes only. The code provided here is a tool for analysis, not financial advice. The "Survivors" list is generated based on historical data and specific programmed criteria. Always conduct your own due diligence before making investment decisions.
+
+Built by [Your Name / Code & Capital] Follow the math, not the narrative.
+
+
+***
+
+### 📂 Bonus: `database_setup.sql`
+
+Your users will need this file to create the database table that matches your Python code perfectly. Create a new file named `database_setup.sql` and include this in your repo:
+
+```sql
+CREATE DATABASE IF NOT EXISTS investor_dashboard;
+USE investor_dashboard;
+
+CREATE TABLE IF NOT EXISTS stocks (
+    ticker VARCHAR(10) PRIMARY KEY,
+    company_name VARCHAR(255),
+    price DECIMAL(10, 2),
+    safety_score INT,
+    cash_engine_score INT,
+    roic_current DECIMAL(10, 2),
+    debt_to_equity DECIMAL(10, 2),
+    gross_margin_3yr_avg DECIMAL(10, 2),
+    fcf_yield DECIMAL(10, 2),
+    status VARCHAR(20), -- 'SURVIVOR' or 'REJECTED'
+    failure_reasons TEXT,
+    valuation_status VARCHAR(20), -- 'BARGAIN', 'FAIR', 'PRICEY'
+    lie_detector_status VARCHAR(20), -- 'VERIFIED' or 'SUSPICIOUS'
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
