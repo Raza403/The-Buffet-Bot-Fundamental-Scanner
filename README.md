@@ -1,115 +1,213 @@
-# 📉 The Buffett Bot (S&P 500 Quality Scanner)
+# 📉 The Buffett Bot
 
-> "Markets are random. Cash flow is fact."
+### S&P 500 Quality & Cash-Flow Scanner
 
-**A high-performance algorithmic scanner that automates Warren Buffett's core investing principles.** This project rejects the "hype" of the stock market. Instead, it subjects the S&P 500 to a ruthless, mathematical stress test—filtering companies based on Return on Invested Capital (ROIC), Balance Sheet Safety, and Pricing Power.
+> **Markets are noisy. Cash flow is fact.**
+
+**The Buffett Bot** is a high-performance fundamental scanner that automates Warren Buffett–style quality investing.  
+It ignores narratives, price action, and hype — and instead subjects the **entire S&P 500** to a strict, cash-flow-driven stress test.
+
+Only businesses with **strong economics, clean balance sheets, and real cash generation** survive.
+
+* * *
+
+## 🧠 Investment Philosophy
+
+This project is built on three non-negotiables:
+
+1.  **Quality beats stories**
+    
+2.  **Cash flow > accounting earnings**
+    
+3.  **Great businesses are rare**
+    
+
+The scanner enforces these principles mechanically — no discretion, no bias.
+
+* * *
+
+## 📊 Dashboard Preview
 
 ![Dashboard Preview](https://via.placeholder.com/800x400/0A0C10/00D185?text=DASHBOARD+PREVIEW)
-*(Replace this link with a screenshot of your actual PHP Dashboard)*
 
----
+> Replace this image with a screenshot of your actual PHP dashboard.
 
-## ⚡ Engineering Alpha: Features
+* * *
 
-This isn't just a basic screener. It is an optimized data pipeline designed for **speed** and **financial rigor**.
+## ⚡ Engineering Alpha — Core Features
 
-* **🚀 Multi-Threaded Scanning:** Analyzes 500+ stocks in under 60 seconds using Python `concurrent.futures`.
-* **🧠 Smart Caching:** Implements a local database cache to prevent redundant API calls. Fundamental data (which changes quarterly) is stored for 7 days.
-* **🕵️ The Accounting Lie Detector:** Automatically flags companies where **Net Income** (Accounting Profit) is significantly higher than **Free Cash Flow** (Real Cash).
-* **💎 The "Elite" Filter:** A hard-coded gauntlet that rejects 98% of stocks based on:
-    * **Moat:** Gross Margins > 45%
-    * **Engine:** ROIC > 25%
-    * **Safety:** Debt-to-Equity < 0.5
-* **📊 Dark Mode Dashboard:** A clean, bloat-free PHP interface built with Tailwind CSS to visualize the "Survivors."
+This is not a basic screener. It is a **production-grade data pipeline** optimized for speed, accuracy, and financial rigor.
 
----
+### 🚀 Performance
+
+*   **Multi-threaded scanning** using `concurrent.futures`
+    
+*   Processes **500+ stocks in under 60 seconds**
+    
+
+### 🧠 Smart Caching
+
+*   Local MySQL cache prevents redundant API calls
+    
+*   Fundamental data cached for **7 days** (quarterly relevance)
+    
+
+### 🕵️ Accounting Lie Detector
+
+*   Flags companies where **Net Income ≫ Free Cash Flow**
+    
+*   Identifies earnings manipulation and low-quality profits
+    
+
+### 💎 The “Elite” Filter (98% Rejection Rate)
+
+Only companies that pass all of the following survive:
+
+*   **Pricing Power:** Gross Margin > **45%**
+    
+*   **Capital Efficiency:** ROIC > **25%**
+    
+*   **Balance Sheet Safety:** Debt-to-Equity < **0.5**
+    
+*   **Valuation Discipline:** Minimum Free Cash Flow Yield
+    
+
+### 📊 Dashboard
+
+*   Dark-mode PHP dashboard
+    
+*   Built with **Tailwind CSS**
+    
+*   Zero bloat, zero JavaScript frameworks
+    
+*   Focused on decision-grade information only
+    
+
+* * *
 
 ## 🛠️ Tech Stack
 
-* **Core Logic:** Python 3.10+
-* **Data Source:** Yahoo Finance (`yfinance`)
-* **Database:** MySQL
-* **Frontend:** PHP 8.0+, Tailwind CSS (CDN)
+**Backend**
 
----
+*   Python **3.10+**
+    
+*   `yfinance`
+    
+*   `pandas`, `numpy`
+    
+*   MySQL
+    
+
+**Frontend**
+
+*   PHP **8.0+**
+    
+*   Tailwind CSS (CDN)
+    
+
+* * *
 
 ## ⚙️ Installation & Setup
 
-### 1. Database Setup
-You need a local MySQL instance running. Create a database named `investor_dashboard` and run the included SQL script (see `database_setup.sql`) to create the `stocks` table.
+### 1️⃣ Database Setup
 
-### 2. Python Dependencies
-Install the required libraries:
-```bash
-pip install yfinance mysql-connector-python pandas requests numpy
+You need a local MySQL instance running.
 
-3. Configure Database Connection
-Open market_scanner.py and update the DB_CONFIG dictionary with your local credentials:
+Create the database and table using the provided SQL file:
 
-Python
+`mysql -u root -p < database_setup.sql`
 
-DB_CONFIG = {
-    'host': 'localhost',
-    'user': 'your_username', 
-    'password': 'your_password',
-    'database': 'investor_dashboard',
-    'port': 3306 # Default MySQL port
-}
-4. Run the Scanner
-Execute the Python script to fetch data and populate the database:
+This creates:
 
-Bash
+*   Database: `investor_dashboard`
+    
+*   Table: `stocks`
+    
 
-python market_scanner.py
-You will see the terminal light up with red (REJECTED) and green (SURVIVOR) logs.
+* * *
 
-5. Launch the Dashboard
-Serve the index.php file using a local PHP server (XAMPP, MAMP, or built-in PHP):
+### 2️⃣ Python Dependencies
 
-Bash
+Install required libraries:
 
-php -S localhost:8000
-Open your browser to http://localhost:8000.
+`pip install yfinance mysql-connector-python pandas requests numpy`
 
-🎛️ Configuration (God Mode)
-You can tweak the strictness of the "Buffett Bot" by modifying the constants at the top of market_scanner.py:
+* * *
 
-Python
+### 3️⃣ Configure Database Connection
 
-# THE "ELITE" FILTERS
-MIN_GROSS_MARGIN = 45.0     # Pricing power requirement
-MIN_ROIC = 25.0             # Management efficiency requirement
-MAX_DEBT_TO_EQUITY = 0.5    # Leverage limit
-MIN_FCF_YIELD = 5.0         # Valuation floor (5% = 20x P/FCF)
-⚠️ Disclaimer
-This software is for educational purposes only. The code provided here is a tool for analysis, not financial advice. The "Survivors" list is generated based on historical data and specific programmed criteria. Always conduct your own due diligence before making investment decisions.
+Open `market_scanner.py` and update the database credentials:
 
-Built by [Your Name / Code & Capital] Follow the math, not the narrative.
+`DB_CONFIG = {     "host": "localhost",     "user": "your_username",     "password": "your_password",     "database": "investor_dashboard",     "port": 3306 }`
 
+* * *
 
-***
+### 4️⃣ Run the Scanner
 
-### 📂 Bonus: `database_setup.sql`
+Execute the scanner:
 
-Your users will need this file to create the database table that matches your Python code perfectly. Create a new file named `database_setup.sql` and include this in your repo:
+`python market_scanner.py`
 
-```sql
-CREATE DATABASE IF NOT EXISTS investor_dashboard;
-USE investor_dashboard;
+Expected output:
 
-CREATE TABLE IF NOT EXISTS stocks (
-    ticker VARCHAR(10) PRIMARY KEY,
-    company_name VARCHAR(255),
-    price DECIMAL(10, 2),
-    safety_score INT,
-    cash_engine_score INT,
-    roic_current DECIMAL(10, 2),
-    debt_to_equity DECIMAL(10, 2),
-    gross_margin_3yr_avg DECIMAL(10, 2),
-    fcf_yield DECIMAL(10, 2),
-    status VARCHAR(20), -- 'SURVIVOR' or 'REJECTED'
-    failure_reasons TEXT,
-    valuation_status VARCHAR(20), -- 'BARGAIN', 'FAIR', 'PRICEY'
-    lie_detector_status VARCHAR(20), -- 'VERIFIED' or 'SUSPICIOUS'
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
+*   🟥 **REJECTED** — failed one or more quality checks
+    
+*   🟩 **SURVIVOR** — elite business, passed all filters
+    
+
+* * *
+
+### 5️⃣ Launch the Dashboard
+
+Serve the PHP dashboard locally:
+
+`php -S localhost:8000`
+
+Open in browser:
+
+`http://localhost:8000`
+
+* * *
+
+## 🎛️ Configuration — “God Mode”
+
+You control the strictness of the scanner from the top of `market_scanner.py`:
+
+`# ELITE QUALITY FILTERS  MIN_GROSS_MARGIN = 45.0      # Pricing power requirement MIN_ROIC = 25.0              # Capital efficiency requirement MAX_DEBT_TO_EQUITY = 0.5     # Balance sheet safety MIN_FCF_YIELD = 5.0          # Valuation floor (5% = ~20x P/FCF)`
+
+Tighten these → fewer survivors  
+Loosen them → more compromises
+
+* * *
+
+## ⚠️ Disclaimer
+
+This project is **for educational and analytical purposes only**.
+
+*   Not financial advice
+    
+*   No guarantees
+    
+*   Based on historical financial data
+    
+*   Assumes clean source data
+    
+
+Always perform your own due diligence before investing.
+
+* * *
+
+## 🧱 Database Schema
+
+### 📂 `database_setup.sql`
+
+Create this file in your repository:
+
+`CREATE DATABASE IF NOT EXISTS investor_dashboard; USE investor_dashboard;  CREATE TABLE IF NOT EXISTS stocks (     ticker VARCHAR(10) PRIMARY KEY,     company_name VARCHAR(255),     price DECIMAL(10, 2),      safety_score INT,     cash_engine_score INT,      roic_current DECIMAL(10, 2),     debt_to_equity DECIMAL(10, 2),     gross_margin_3yr_avg DECIMAL(10, 2),     fcf_yield DECIMAL(10, 2),      status VARCHAR(20),              -- SURVIVOR | REJECTED     failure_reasons TEXT,      valuation_status VARCHAR(20),    -- BARGAIN | FAIR | PRICEY     lie_detector_status VARCHAR(20), -- VERIFIED | SUSPICIOUS      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP );`
+
+* * *
+
+## 🧠 Author
+
+**Built by Code & Capital**  
+Follow the math. Ignore the narrative.
